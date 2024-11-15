@@ -7509,12 +7509,13 @@ Transform:
   m_GameObject: {fileID: 1040101407}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 3.86, y: 0.98, z: -1.36}
+  m_LocalPosition: {x: 0.33, y: 0.98, z: -1.36}
   m_LocalScale: {x: 0.61993, y: 0.61993, z: 0.61993}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1319045238}
   - {fileID: 1259123438}
+  - {fileID: 1256493917}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1046851460
@@ -8006,7 +8007,7 @@ GameObject:
   - component: {fileID: 1256493916}
   - component: {fileID: 1256493915}
   m_Layer: 0
-  m_Name: LightParticle (1)
+  m_Name: ExplosionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8343,7 +8344,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9109,22 +9110,40 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.032906063
-          value: 0.8113937
-          inSlope: 0.35182413
-          outSlope: 0.35182413
+          time: 0.1286872
+          value: 1
+          inSlope: 1.6472955
+          outSlope: 1.6472955
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.1327038
+          outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.97442627
-          value: 0.08333397
-          inSlope: -1.2656038
-          outSlope: -1.2656038
+          time: 0.3117082
+          value: 0.9642849
+          inSlope: 0.000006698965
+          outSlope: 0.000006698965
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.17742282
+          inWeight: 0.33333334
+          outWeight: 0.8691738
+        - serializedVersion: 3
+          time: 0.4550239
+          value: 0.8228651
+          inSlope: -3.0797157
+          outSlope: -3.0797157
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.2353799
+        - serializedVersion: 3
+          time: 0.91683716
+          value: 0.0714283
+          inSlope: -0.2835905
+          outSlope: -0.2835905
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.12924685
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -12887,12 +12906,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256493914}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.86, y: 0.98, z: -1.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalScale: {x: 1.6130853, y: 1.6130854, z: 1.6130854}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1040101410}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1259123435
 GameObject:
@@ -28749,7 +28768,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2690
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: -2.0000002, z: 1e-43, w: 1.01e-43}
+  m_BoundingSphereOverride: {x: 2.228e-42, y: 2.47e-42, z: 4.8e-44, w: 4.9e-44}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -29369,4 +29388,3 @@ SceneRoots:
   - {fileID: 895395307}
   - {fileID: 1040101410}
   - {fileID: 655042325}
-  - {fileID: 1256493917}
