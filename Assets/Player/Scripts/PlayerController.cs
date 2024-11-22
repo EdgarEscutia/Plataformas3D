@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Move Settings")]
     [SerializeField]float speed = 5f;
+    [SerializeField] float verticalSpeedOnGrounded = -5f;
 
 
     [Header("Input Actions")]
@@ -38,9 +39,15 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        Vector3 movement = 
-                            mainCamera.transform.right * rawMove.x + 
-                            mainCamera.transform.forward * rawMove.z;
+        UpdateMovementOnPlay();
+        UpdateVerticalMovement();
+    }
+
+    private void UpdateMovementOnPlay()
+    {
+        Vector3 movement =
+                        mainCamera.transform.right * rawMove.x +
+                        mainCamera.transform.forward * rawMove.z;
 
         float oldMovementMagnitude = movement.magnitude;
 
@@ -50,6 +57,22 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(movementProjectedOnPlane * speed * Time.deltaTime);
     }
+
+    float gravity = -9.8f;
+    float verticalVelocity;
+
+    void UpdateVerticalMovement()
+    {
+        verticalVelocity += gravity * Time.deltaTime;
+        characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
+
+        if(characterController.isGrounded)
+        {
+            verticalVelocity = verticalSpeedOnGrounded;
+
+        }
+    }
+
 
     Vector3 rawMove = Vector3.zero;
 
