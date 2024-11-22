@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("Move Settings")]
     [SerializeField]float speed = 5f;
     [SerializeField] float verticalSpeedOnGrounded = -5f;
+    [SerializeField] float jumpVelocity = 10f;
 
 
     [Header("Input Actions")]
@@ -18,12 +19,14 @@ public class PlayerController : MonoBehaviour
     CharacterController characterController;
 
     Camera mainCamera;
+    Animator animator;
 
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -34,14 +37,22 @@ public class PlayerController : MonoBehaviour
 
 
         move.action.performed += OnMove;
-        move.action.performed += OnJump;
+        move.action.started += OnMove;
+        move.action.canceled += OnMove;
+
+        jump.action.performed += OnJump;
+
         run.action.performed += OnMove;
+
     }
     private void Update()
     {
         UpdateMovementOnPlay();
         UpdateVerticalMovement();
+        UpdateAnimation();
     }
+
+    Vector3 lastVelocity = Vector3.zero;
 
     private void UpdateMovementOnPlay()
     {
@@ -56,6 +67,8 @@ public class PlayerController : MonoBehaviour
         movementProjectedOnPlane = movementProjectedOnPlane.normalized * oldMovementMagnitude;
 
         characterController.Move(movementProjectedOnPlane * speed * Time.deltaTime);
+
+        lastVelocity = movementProjectedOnPlane;
     }
 
     float gravity = -9.8f;
@@ -66,11 +79,28 @@ public class PlayerController : MonoBehaviour
         verticalVelocity += gravity * Time.deltaTime;
         characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
 
-        if(characterController.isGrounded)
+        lastVelocity.y = verticalVelocity;
+
+        if (characterController.isGrounded)
         {
             verticalVelocity = verticalSpeedOnGrounded;
-
         }
+
+        if(mustJump)
+        {
+            mustJump = false;
+
+            if(characterController.isGrounded)
+            {
+                verticalVelocity = jumpVelocity;
+            }
+        }
+    }
+
+    void UpdateAnimation()
+    {
+        animator.SetFloat("SidewardVelocity", lastVelocity.x);
+        animator.SetFloat("ForwardVelocity", lastVelocity.z);
     }
 
 
@@ -82,9 +112,11 @@ public class PlayerController : MonoBehaviour
         rawMove = new Vector3(rawInput.x, 0, rawInput.y);
     }
 
+
+    bool mustJump;
     private void OnJump(InputAction.CallbackContext context)
     { 
-
+        mustJump = true;
     }
 
 
@@ -94,6 +126,13 @@ public class PlayerController : MonoBehaviour
         move.action.Disable();
         jump.action.Disable();
         run.action.Disable();
+
+        move.action.performed -= OnMove;
+        move.action.started-= OnMove;
+        move.action.canceled -= OnMove;
+
+
+        move.action.performed -= OnJump;
 
     }
 
