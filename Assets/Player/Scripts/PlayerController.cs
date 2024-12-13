@@ -9,6 +9,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float verticalSpeedOnGrounded = -5f;
     [SerializeField] float jumpVelocity = 10f;
 
+    public enum OrientationMode
+    {
+        ToMovementDirection,
+        ToCameraForward,
+        ToTarget,
+    };
+    [Header("Orientation")]
+    [SerializeField] OrientationMode orientationMode = OrientationMode.ToMovementDirection;
+    [SerializeField] Transform orientationTarget;
+    [SerializeField] float angularSpeed = 720f;
+
 
     [Header("Input Actions")]
     [SerializeField] InputActionReference move;
@@ -49,7 +60,9 @@ public class PlayerController : MonoBehaviour
     {
         UpdateMovementOnPlay();
         UpdateVerticalMovement();
+        UpdateOrientation();
         UpdateAnimation();
+
     }
 
     Vector3 lastVelocity = Vector3.zero;
@@ -78,6 +91,7 @@ public class PlayerController : MonoBehaviour
     {
         verticalVelocity += gravity * Time.deltaTime;
         characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
+        //lastVelocity = move
 
         lastVelocity.y = verticalVelocity;
 
@@ -97,8 +111,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void UpdateOrientation()
+    {
+        Vector3 desiredDirection = Vector3.forward;
+        switch(orientationMode)
+        { 
+            case OrientationMode.ToMovementDirection:
+                desiredDirection = lastVelocity;
+                break;
+            case OrientationMode.ToCameraForward:
+                desiredDirection = mainCamera.transform.forward;
+                break;
+            case OrientationMode.ToTarget:
+                desiredDirection = orientationTarget.position - transform.position; 
+                break;
+        }
+        desiredDirection.y = 0f;
+        
+        float angleToApply = angularSpeed * Time.deltaTime;
+
+        //Distancia angular
+        float angularDistance = Vector3.SignedAngle(transform.forward, desiredDirection, Vector3.up);
+
+        //Modulo (valor en positivo)
+        float realAngleToApply = 
+            Mathf.Sign(angularDistance) *  //O vale 1f o -1f
+            Mathf.Min(angleToApply, Mathf.Abs(angularDistance)); //o e lo que tocaba girar o un poco menos pq ya ha llegado
+
+        Quaternion rotationToApply = Quaternion.AngleAxis(realAngleToApply, Vector3.up);
+    
+
+        transform.rotation = rotationToApply * transform.rotation; //La rotacion sera aplicada a la rotacion del player
+    }
+
+
     void UpdateAnimation()
     {
+
+        Vector3 localVelocity = transform.InverseTransformDirection(lastVelocity);
+        Vector3 normalizedLocalVelocity = localVelocity / speed;
+
+
         animator.SetFloat("SidewardVelocity", lastVelocity.x);
         animator.SetFloat("ForwardVelocity", lastVelocity.z);
     }
