@@ -529,7 +529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83117377}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910657, y: -0.0031113876, z: 0.00059919845, w: 0.9819515}
+  m_LocalRotation: {x: 0.18910174, y: -0.007669331, z: 0.0014769781, w: 0.9819265}
   m_LocalPosition: {x: -1.955, y: 3.675, z: -11.797944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2461,9 +2461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032758679b04fba42a0df5d8a6381001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 0}
-  cursorMode: 0
-  hotSpot: {x: 20, y: 20}
+  cursorTexture: {fileID: 2800000, guid: c7e63929cb453c24eb4903c1d9a4e746, type: 3}
+  cursorMode: 1
+  hotSpot: {x: 0, y: 0}
 --- !u!65 &669991526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28940,7 +28940,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910658, y: -0.0031113878, z: 0.00059919857, w: 0.9819515}
+  m_LocalRotation: {x: 0.18910176, y: -0.007669333, z: 0.0014769783, w: 0.9819265}
   m_LocalPosition: {x: -1.955, y: 3.675, z: -11.797944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29278,7 +29278,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2690
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: -3.9006486, y: -4.060593, z: 7.3301516, w: -5.1737566}
+  m_BoundingSphereOverride: {x: 1.2972282e+10, y: 7.191642e-39, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0

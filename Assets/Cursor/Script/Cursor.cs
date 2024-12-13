@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class Cursor : MonoBehaviour
+public class ChangeCursor : MonoBehaviour
 {
-    [SerializeField] Texture2D cursorTexture;
-    [SerializeField] CursorMode cursorMode = CursorMode.Auto;
-    [SerializeField] Vector2 hotSpot = Vector2.zero;
+//    [SerializeField] Texture2D cursorTexture;
+//    [SerializeField] CursorMode cursorMode ;
+//    [SerializeField] Vector2 hotSpot;
 
-    void Awake()
-    {
-       //Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
-    }
+//    void Awake()
+//    {
+//       Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);
+//    }
 }
