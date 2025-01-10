@@ -1,16 +1,15 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class Isma_PlayerController : MonoBehaviour
 {
+    //public static PlayerController instance;
 
-    public static PlayerController instance;
-
-    [Header("Move Settings")]
-    [SerializeField]float speed = 5f;
+    [Header("Movemet Settings")]
+    [SerializeField] float speed = 5f;
     [SerializeField] float verticalSpeedOnGrounded = -5f;
-    [SerializeField] float jumpVelocity = 10f;
+    [SerializeField] float jumpVelocity = 5f;
 
     public enum OrientationMode
     {
@@ -18,10 +17,12 @@ public class PlayerController : MonoBehaviour
         ToCameraForward,
         ToTarget,
     };
+
     [Header("Orientation")]
     [SerializeField] OrientationMode orientationMode = OrientationMode.ToMovementDirection;
     [SerializeField] Transform orientationTarget;
     [SerializeField] float angularSpeed = 720f;
+
 
 
     [Header("Input Actions")]
@@ -29,17 +30,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InputActionReference jump;
     [SerializeField] InputActionReference run;
 
-
     CharacterController characterController;
-
     Camera mainCamera;
     Animator animator;
-
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
+        Camera mainCamera;
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -49,19 +47,18 @@ public class PlayerController : MonoBehaviour
         jump.action.Enable();
         run.action.Enable();
 
-
         move.action.performed += OnMove;
         move.action.started += OnMove;
         move.action.canceled += OnMove;
 
         jump.action.performed += OnJump;
 
-        run.action.performed += OnMove;
-
+        //hurtCollider.onHitReceived.AddListener();
     }
+
     private void Update()
     {
-        UpdateMovementOnPlay();
+        UpdateMovementOnPlane();
         UpdateVerticalMovement();
         UpdateOrientation();
         UpdateAnimation();
@@ -70,21 +67,21 @@ public class PlayerController : MonoBehaviour
 
     Vector3 lastVelocity = Vector3.zero;
 
-    private void UpdateMovementOnPlay()
+    private void UpdateMovementOnPlane()
     {
         Vector3 movement =
-                        mainCamera.transform.right * rawMove.x +
-                        mainCamera.transform.forward * rawMove.z;
-
+            mainCamera.transform.right * rawMove.x +
+            mainCamera.transform.forward * rawMove.z;
         float oldMovementMagnitude = movement.magnitude;
 
-        Vector3 movementProjectedOnPlane = Vector3.ProjectOnPlane(movement, Vector3.up);
+        Vector3 movementProjectedOnPlane =
+            Vector3.ProjectOnPlane(movement, Vector3.up);
 
         movementProjectedOnPlane = movementProjectedOnPlane.normalized * oldMovementMagnitude;
 
-        characterController.Move(movementProjectedOnPlane * speed * Time.deltaTime);
 
-        lastVelocity = movementProjectedOnPlane;
+        characterController.Move(movementProjectedOnPlane * speed * Time.deltaTime);
+        lastVelocity = movementProjectedOnPlane * speed;
     }
 
     float gravity = -9.8f;
@@ -94,20 +91,16 @@ public class PlayerController : MonoBehaviour
     {
         verticalVelocity += gravity * Time.deltaTime;
         characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
-        //lastVelocity = move
-
         lastVelocity.y = verticalVelocity;
 
         if (characterController.isGrounded)
         {
             verticalVelocity = verticalSpeedOnGrounded;
         }
-
-        if(mustJump)
+        if (mustJump)
         {
             mustJump = false;
-
-            if(characterController.isGrounded)
+            if (characterController.isGrounded)
             {
                 verticalVelocity = jumpVelocity;
             }
@@ -117,8 +110,8 @@ public class PlayerController : MonoBehaviour
     void UpdateOrientation()
     {
         Vector3 desiredDirection = Vector3.forward;
-        switch(orientationMode)
-        { 
+        switch (orientationMode)
+        {
             case OrientationMode.ToMovementDirection:
                 desiredDirection = lastVelocity;
                 break;
@@ -126,57 +119,32 @@ public class PlayerController : MonoBehaviour
                 desiredDirection = mainCamera.transform.forward;
                 break;
             case OrientationMode.ToTarget:
-                desiredDirection = orientationTarget.position - transform.position; 
+                desiredDirection = orientationTarget.position - transform.position;
                 break;
         }
         desiredDirection.y = 0f;
-        
+
         float angleToApply = angularSpeed * Time.deltaTime;
-
-        //Distancia angular
+        // Distancia angular entre transform.forward y desiredDirection
         float angularDistance = Vector3.SignedAngle(transform.forward, desiredDirection, Vector3.up);
-
-        //Modulo (valor en positivo)
-        float realAngleToApply = 
-            Mathf.Sign(angularDistance) *  //O vale 1f o -1f
-            Mathf.Min(angleToApply, Mathf.Abs(angularDistance)); //o e lo que tocaba girar o un poco menos pq ya ha llegado
-
+        float realAngleToApply =
+            Math.Abs(angularDistance) *                             // 0 vale 1f, o vale -1f
+            Math.Min(angleToApply, Mathf.Abs(angularDistance));     // 0 es lo que tocaba girar, o
+                                                                    // es un poco menos porque ya he llegado
         Quaternion rotationToApply = Quaternion.AngleAxis(realAngleToApply, Vector3.up);
-    
-
-        transform.rotation = rotationToApply * transform.rotation; //La rotacion sera aplicada a la rotacion del player
+        transform.rotation = rotationToApply * transform.rotation;
     }
 
 
     void UpdateAnimation()
     {
-
         Vector3 localVelocity = transform.InverseTransformDirection(lastVelocity);
-        Vector3 normalizedLocalVelocity = localVelocity / speed;
-
+        Vector3 normalizedField = localVelocity / speed;
 
         animator.SetFloat("SidewardVelocity", lastVelocity.x);
         animator.SetFloat("ForwardVelocity", lastVelocity.z);
     }
 
-
-    Vector3 rawMove = Vector3.zero;
-
-    private void OnMove(InputAction.CallbackContext context)
-    {
-        Vector2 rawInput = context.ReadValue<Vector2>();
-        rawMove = new Vector3(rawInput.x, 0, rawInput.y);
-    }
-
-
-    bool mustJump;
-    private void OnJump(InputAction.CallbackContext context)
-    { 
-        mustJump = true;
-    }
-
-
-    
     private void OnDisable()
     {
         move.action.Disable();
@@ -184,12 +152,38 @@ public class PlayerController : MonoBehaviour
         run.action.Disable();
 
         move.action.performed -= OnMove;
-        move.action.started-= OnMove;
+        move.action.started -= OnMove;
         move.action.canceled -= OnMove;
 
+        jump.action.performed -= OnJump;
 
-        move.action.performed -= OnJump;
-
+        //hurtCollider.onHitReceived.RemoveListener(OnHitReceived);
     }
 
+
+    //private void OnHitReceived(HitCollider hitCollide, HurtCollider hurtCollider)
+    //{
+    //    gameObject.SetActive(false);
+    //    Invoke(nameof(Resurrect), 3f);
+    //}
+
+    void Resurrect()
+    {
+        gameObject.SetActive(true);
+    }
+
+    Vector3 rawMove = Vector3.zero;
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        Vector2 rawInput = context.ReadValue<Vector2>();
+        rawMove = new Vector3(rawInput.x, 0f, rawInput.y);
+    }
+
+    bool mustJump;
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        mustJump = true;
+    }
 }
+

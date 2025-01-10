@@ -529,7 +529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83117377}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910174, y: -0.007669331, z: 0.0014769781, w: 0.9819265}
+  m_LocalRotation: {x: 0.18910366, y: -0.0062804935, z: 0.0012095124, w: 0.98193634}
   m_LocalPosition: {x: -1.955, y: 3.675, z: -11.797944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2461,9 +2461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032758679b04fba42a0df5d8a6381001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: c7e63929cb453c24eb4903c1d9a4e746, type: 3}
-  cursorMode: 1
-  hotSpot: {x: 0, y: 0}
 --- !u!65 &669991526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23209,7 +23206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae6f3d07f3917d4082e6777bd85bca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 494966395}
+  wanderingRadius: 1
+  detectionDistance: 5
+  reachingDistance: 1.5
 --- !u!195 &1328414901
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -28940,7 +28939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910176, y: -0.007669333, z: 0.0014769783, w: 0.9819265}
+  m_LocalRotation: {x: 0.18910368, y: -0.0062804944, z: 0.0012095128, w: 0.98193634}
   m_LocalPosition: {x: -1.955, y: 3.675, z: -11.797944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
