@@ -13,6 +13,11 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        agent.destination = target.position;
+        //Vector3 playerPosition = PlayerController.instance.transform.position;
+
+        //if(Vector3.Distance(playerPosition, transform.position))
+
+
+            agent.destination = target.position;
     }
 }
