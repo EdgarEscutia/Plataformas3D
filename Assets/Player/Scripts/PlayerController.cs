@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
         animator = GetComponentInChildren<Animator>();
+        instance = this;
+
+
+        //para arreglar las animaciones.
+        //animator.keepAnimatorControllerStateOnDisable = true;
     }
 
     private void OnEnable()
