@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Blackout Oldskull
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 11b59e73d37632743b8f20657af8fbd5, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
