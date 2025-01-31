@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         instance = this;
 
-
+        Time.timeScale = 1f;
         //para arreglar las animaciones.
         //animator.keepAnimatorControllerStateOnDisable = true;
     }
