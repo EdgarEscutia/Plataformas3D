@@ -6,20 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    //void Awake()
-    //{
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
 
-    //}
-    //void Start()
-    //{
-    //    StartCoroutine(MyCoroutine());
-    //}
-    //IEnumerator MyCoroutine()
-    //{
-    //    Debug.Log("Starting Coroutine");
-    //    yield return null;
-    //    Debug.Log("Finishing coroutine");
-    //}
+        }
+    }
     public void Salir()
     {
         Application.Quit();
