@@ -209,7 +209,7 @@ public class PlayerController : Entity
 
     }
 
-    //private void OnHitRecieved(HitCollider hitCollider, HurtCollider hurtCollider)
+    //private void OnHitRecieved(IHitter hitter,HitCollider hitCollider, HurtCollider hurtCollider)
     //{
     //    ragdollizer.Ragdollize();
     //    Invoke(nameof(Desactivate), 2f);
