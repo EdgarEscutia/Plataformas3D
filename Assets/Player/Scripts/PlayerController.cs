@@ -1,16 +1,19 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Entity
 {
 
     public static PlayerController instance;
 
     [Header("Move Settings")]
-    [SerializeField]float speed = 5f;
+    [SerializeField]float speedWalk = 5f;
+    [SerializeField]float speedRun = 10f;
     [SerializeField] float verticalSpeedOnGrounded = -5f;
     [SerializeField] float jumpVelocity = 10f;
+
 
     public enum OrientationMode
     {
@@ -32,20 +35,29 @@ public class PlayerController : MonoBehaviour
 
     CharacterController characterController;
 
+    Ragdollizer ragdollizer;
+
     Camera mainCamera;
-    Animator animator;
+    
+    float speed;
 
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
+
+        instance = this;
+
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
-        animator = GetComponentInChildren<Animator>();
-        instance = this;
+
+        
 
         Time.timeScale = 1f;
         //para arreglar las animaciones.
         //animator.keepAnimatorControllerStateOnDisable = true;
+
+        speed = speedWalk;
     }
 
     private void OnEnable()
@@ -61,19 +73,21 @@ public class PlayerController : MonoBehaviour
 
         jump.action.performed += OnJump;
 
+        run.action.started += OnRun;
+        run.action.canceled += OnRun;
+
         run.action.performed += OnMove;
 
     }
-    private void Update()
+    protected  void Update()
     {
         UpdateMovementOnPlay();
         UpdateVerticalMovement();
         UpdateOrientation();
         UpdateAnimation();
-
     }
 
-    Vector3 lastVelocity = Vector3.zero;
+    Vector3 lastNormalizedVelocity = Vector3.zero;
 
     private void UpdateMovementOnPlay()
     {
@@ -89,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(movementProjectedOnPlane * speed * Time.deltaTime);
 
-        lastVelocity = movementProjectedOnPlane;
+        lastNormalizedVelocity = movementProjectedOnPlane;
     }
 
     float gravity = -9.8f;
@@ -101,7 +115,7 @@ public class PlayerController : MonoBehaviour
         characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
         //lastVelocity = move
 
-        lastVelocity.y = verticalVelocity;
+        lastNormalizedVelocity.y = verticalVelocity;
 
         if (characterController.isGrounded)
         {
@@ -125,7 +139,7 @@ public class PlayerController : MonoBehaviour
         switch(orientationMode)
         { 
             case OrientationMode.ToMovementDirection:
-                desiredDirection = lastVelocity;
+                desiredDirection = lastNormalizedVelocity;
                 break;
             case OrientationMode.ToCameraForward:
                 desiredDirection = mainCamera.transform.forward;
@@ -153,17 +167,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void UpdateAnimation()
-    {
-
-        Vector3 localVelocity = transform.InverseTransformDirection(lastVelocity);
-        Vector3 normalizedLocalVelocity = localVelocity / speed;
-
-
-        animator.SetFloat("SidewardVelocity", lastVelocity.x);
-        animator.SetFloat("ForwardVelocity", lastVelocity.z);
-    }
-
+   
 
     Vector3 rawMove = Vector3.zero;
 
@@ -192,9 +196,60 @@ public class PlayerController : MonoBehaviour
         move.action.started-= OnMove;
         move.action.canceled -= OnMove;
 
+        run.action.started -= OnRun;
+        run.action.canceled -= OnRun;
 
         move.action.performed -= OnJump;
 
     }
 
+    void OnRun(InputAction.CallbackContext context)
+    {
+        speed = run.action.IsPressed() ? speedRun :speedWalk;
+
+    }
+
+    //private void OnHitRecieved(HitCollider hitCollider, HurtCollider hurtCollider)
+    //{
+    //    ragdollizer.Ragdollize();
+    //    Invoke(nameof(Desactivate), 2f);
+    //    Invoke(nameof(Resurrect), 5f);
+
+    //}
+
+    //private void Resurrect()
+    //{
+    //    gameObject.SetActive(true);
+    //    ragdollizer.DeRagdollize();
+    //}
+
+    //private void Desactivate()
+    //{
+    //    gameObject.SetActive(false);
+    //}
+
+    override protected float GetCurrentVerticalSpeed()
+    {
+        return verticalVelocity;
+    }
+
+    override protected float GetJumpSpeed()
+    {
+        return jumpVelocity;
+    }
+
+    override protected bool IsRunning()
+    {
+        return speed == speedRun;
+    }
+
+    override protected bool IsGrounded()
+    {
+        return characterController.isGrounded;
+    }
+
+    override protected Vector3 GetLastNormalizedVelocity()
+    {
+        return lastNormalizedVelocity;
+    }
 }

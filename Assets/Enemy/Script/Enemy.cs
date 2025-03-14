@@ -2,7 +2,7 @@ using System.Collections.Specialized;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
     [SerializeField] float wanderingRadius = 5f;
     [SerializeField] float reachingDistance = 1.5f;
@@ -15,8 +15,10 @@ public class Enemy : MonoBehaviour
     Vector3 homeOrigin;
     Vector3 wanderPosition;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         agent = GetComponent<NavMeshAgent>();
 
         homeOrigin = transform.position;
@@ -42,6 +44,8 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        UpdateAnimation();
+
     }
 
     private void SelectedWanderPosition()
@@ -49,5 +53,30 @@ public class Enemy : MonoBehaviour
         Vector2 positionXY = Random.insideUnitCircle * wanderingRadius;
         Vector3 positionXZ = new Vector3(positionXY.x, 0f, positionXY.y);
         wanderPosition = homeOrigin + positionXZ;
+    }
+
+    protected override float GetCurrentVerticalSpeed()
+    {
+        return 0f;
+    }
+
+    protected override float GetJumpSpeed()
+    {
+        return 0f;
+    }
+
+    protected override bool IsRunning()
+    {
+        return true;
+    }
+
+    protected override bool IsGrounded()
+    {
+        return true;
+    }
+
+    protected override Vector3 GetLastNormalizedVelocity()
+    {
+        return agent.velocity.normalized;
     }
 }
