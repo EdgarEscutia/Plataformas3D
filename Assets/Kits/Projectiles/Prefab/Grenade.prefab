@@ -343,7 +343,7 @@ MonoBehaviour:
   speed: {x: 0, y: 3, z: 3}
   lifeTime: 3
   resultsPrefab:
-  - {fileID: 0}
+  - {fileID: 988124503945296480, guid: 41ba28b71a08f58499fd787237fb39cf, type: 3}
   destroyOnCollision: 0
   instantiateResultsOnCollision: 0
   instantiateResultsOnLifeTimeEnd: 1

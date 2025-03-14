@@ -19,4 +19,9 @@ public class BarrelByRaycast : BarrelBase, IHitter
     {
         return damage;
     }
+
+    Transform IHitter.GetTransform()
+    {
+        return transform;
+    }
 }
