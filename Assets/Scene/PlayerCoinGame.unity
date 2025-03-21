@@ -384,7 +384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &29672415
 Transform:
   m_ObjectHideFlags: 0
@@ -460,6 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 48596755}
+  - component: {fileID: 48596756}
   m_Layer: 0
   m_Name: BarrelByRaycast
   m_TagString: Untagged
@@ -482,6 +483,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1678021016}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &48596756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48596754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09eb6112ac4cfa8438f84be0d4f03399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugShot: 0
+  range: 15
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 51
+  damage: 0.25
+  horizontalDispersionAngle: 5
+  verticalDispersionAngle: 5
+  shotsPerSecond: 4
 --- !u!1 &56161802
 GameObject:
   m_ObjectHideFlags: 0
@@ -6870,6 +6892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 596169073}
+  - component: {fileID: 596169074}
   m_Layer: 0
   m_Name: BarrelByRaycast
   m_TagString: Untagged
@@ -6892,6 +6915,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 667065543}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &596169074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596169072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09eb6112ac4cfa8438f84be0d4f03399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugShot: 0
+  range: 15
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 51
+  damage: 0.25
+  horizontalDispersionAngle: 5
+  verticalDispersionAngle: 5
+  shotsPerSecond: 4
 --- !u!1 &598986642
 GameObject:
   m_ObjectHideFlags: 0
@@ -8549,6 +8593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 730780470}
+  - component: {fileID: 730780471}
   m_Layer: 0
   m_Name: Weapons
   m_TagString: Untagged
@@ -8576,6 +8621,25 @@ Transform:
   - {fileID: 981518336}
   m_Father: {fileID: 494966395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &730780471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730780469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2789cd10a15c74d8985ec5d2861254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialWeaponToSelect: 0
+  debugSelectNextWeapon: 0
+  debugSelectPrevWeapon: 0
+  debugShot: 0
+  debugStartShooting: 0
+  debugStopShooting: 0
+  currentWeaponIndex: -1
 --- !u!4 &732121723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3102951293850369289, guid: 2de915305ae421b45afb3eae11de7d63, type: 3}
@@ -8700,6 +8764,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752045543}
+  - component: {fileID: 752045544}
   m_Layer: 0
   m_Name: BarrelByRaycast
   m_TagString: Untagged
@@ -8722,6 +8787,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1204672950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752045544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752045542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09eb6112ac4cfa8438f84be0d4f03399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugShot: 0
+  range: 15
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 51
+  damage: 0.25
+  horizontalDispersionAngle: 5
+  verticalDispersionAngle: 5
+  shotsPerSecond: 4
 --- !u!1 &765530089
 GameObject:
   m_ObjectHideFlags: 0
@@ -11662,7 +11748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &981518336
 Transform:
   m_ObjectHideFlags: 0
@@ -15222,7 +15308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1323862218
 Transform:
   m_ObjectHideFlags: 0
@@ -15935,7 +16021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1395001624
 Transform:
   m_ObjectHideFlags: 0
