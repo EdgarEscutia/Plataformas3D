@@ -5938,6 +5938,7 @@ GameObject:
   - component: {fileID: 494966395}
   - component: {fileID: 494966394}
   - component: {fileID: 494966396}
+  - component: {fileID: 494966397}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6010,6 +6011,26 @@ MonoBehaviour:
   move: {fileID: 4173967567142202023, guid: a5f66c557c1b33d4b86d84ee7670f2cc, type: 3}
   jump: {fileID: -5670371421460458743, guid: a5f66c557c1b33d4b86d84ee7670f2cc, type: 3}
   run: {fileID: -9212527286454642228, guid: a5f66c557c1b33d4b86d84ee7670f2cc, type: 3}
+--- !u!114 &494966397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494966393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d1dcecf5793bf0418c1f7845ce2282a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shot: {fileID: -2637875458513097718, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  Weapon1: {fileID: -7999107593219455857, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  Weapon2: {fileID: -1903116269090723101, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  Weapon3: {fileID: 3325144132178930354, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  Weapon4: {fileID: -2952117748266874581, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  Weapon5: {fileID: 1681150814186725813, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  CycleWeapon: {fileID: 4062041618657567224, guid: 47b0213db31b4b14395fb49a9e30614f, type: 3}
+  weaponManager: {fileID: 730780471}
 --- !u!1 &496439233
 GameObject:
   m_ObjectHideFlags: 0

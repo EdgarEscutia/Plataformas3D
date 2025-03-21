@@ -69,7 +69,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    private void SelectWeapon(int weaponIndex)
+    public void SelectWeapon(int weaponIndex)
     {
         if((weaponIndex <-1))
         {
@@ -139,5 +139,10 @@ public class WeaponManager : MonoBehaviour
     public void SelectPreviousWeapon()
     {
         SelectWeapon(currentWeaponIndex - 1);
+    }
+
+    public Weapon GetCurrentWeapon()
+    {
+        return currentWeaponIndex == -1 ? null: weapons[currentWeaponIndex];
     }
 }
