@@ -4,37 +4,67 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    enum type {ShotByShot, ContinousShot}
+    public enum WeaponType {ShotByShot, ContinousShot}
 
-    List<BarrelBase> barrelBase = new List<BarrelBase>();
+    //List<BarrelBase> barrelBase = new List<BarrelBase>();
+
+    [SerializeField] public WeaponType weaponType;
+
+    [Header("Debug")]
+    public bool debugShot;
+    public bool debugStartShot;
+    public bool debugStopShot;
+
+    public BarrelBase[] allBarrels;
 
     private void Awake()
     {
-        for (int i = 0; i < 10; i++) 
+        allBarrels = GetComponentsInChildren<BarrelBase>();
+
+        //for (int i = 0; i < 10; i++) 
+        //{
+        //    barrelBase.Add(transform.GetComponentInChildren<BarrelBase>());
+        //}
+    }
+
+    private void OnValidate()
+    {
+        if (debugShot) { 
+            debugShot = false;
+            Shot();
+        }
+        if(debugStartShot)
         {
-            barrelBase.Add(transform.GetComponentInChildren<BarrelBase>());
+            debugStartShot = false;
+            StartShooting();
+
+        }
+        if(debugStopShot)
+        {
+            debugStopShot = false;
+            StopShooting();
         }
     }
-    public virtual void ShootOnce()
+    public void Shot()
     {
-        for (int i = 0; i < barrelBase.Count; i++) 
+        foreach (BarrelBase barrel in allBarrels) 
         { 
-            
+            barrel.ShootOnce();
         }
     }
     public void StartShooting()
     {
-        for (int i = 0; i < barrelBase.Count; i++)
+        foreach (BarrelBase barrel in allBarrels)
         {
-
+            barrel.StartShooting();
         }
     }
 
     public  void StopShooting()
     {
-        for (int i = 0; i < barrelBase.Count; i++)
+        foreach (BarrelBase barrel in allBarrels)
         {
-
+            barrel.StopShooting();
         }
     }
 
@@ -43,11 +73,12 @@ public class Weapon : MonoBehaviour
 
     }
 
-   
-
-     public void NotifyDesSelected()
+    public void NotifyDeselected()
     {
-
+        if(weaponType == WeaponType.ContinousShot)
+        {
+            StopShooting();
+        }
     }
 
 
