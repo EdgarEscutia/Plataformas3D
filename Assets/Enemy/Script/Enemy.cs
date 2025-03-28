@@ -25,6 +25,7 @@ public class Enemy : Entity
 
     BaseState currentState;
 
+    Sight sight;
     protected override void Awake()
     {
         base.Awake();
@@ -39,6 +40,7 @@ public class Enemy : Entity
 
 
         orientator = GetComponent<Orientator>();
+        sight = GetComponentInChildren<Sight>();
 
 
 
@@ -87,12 +89,9 @@ public class Enemy : Entity
 
     private Transform CheckSenses()
     {
-        Vector3 playerPosition = PlayerController.instance.transform.position;
-        return (
-            PlayerController.instance.gameObject.activeSelf &&
-            (Vector3.Distance(playerPosition, transform.position) < detectionDistance)
-            ) ? PlayerController.instance.transform : null;
-       
+        ITargeteable targeteable = sight.GetClosestTarget();
+
+        return (targeteable != null) ? targeteable.GetTransform() : null;
     }
 
     bool TargetIsInRange()

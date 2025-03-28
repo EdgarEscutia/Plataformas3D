@@ -3,7 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Entity
+
+public class PlayerController : Entity, ITargeteable
 {
 
     public static PlayerController instance;
@@ -244,5 +245,15 @@ public class PlayerController : Entity
     override protected Vector3 GetLastNormalizedVelocity()
     {
         return lastNormalizedVelocity;
+    }
+
+    ITargeteable.Faction ITargeteable.GetFaction()
+    {
+        return ITargeteable.Faction.Player;
+    }
+
+    Transform ITargeteable.GetTransform()
+    {
+        return transform;
     }
 }

@@ -11,32 +11,40 @@ public class Sight : MonoBehaviour
     [SerializeField] LayerMask visibleLayersMask = Physics.DefaultRaycastLayers;
     [SerializeField] LayerMask OcludingLayersMask = Physics.DefaultRaycastLayers;
 
+    public List<ITargeteable> targeteables = new();
+
+
     private void Update()
     {
         Collider[] colliders = Physics.OverlapBox(
             transform.position + (transform.forward * (range / 2f)),
-        (Vector3.forward * (range/ 2f)) + 
-        (Vector3.right * (width / 2f))+
-        (Vector3.up * (height/2f)),
+             (Vector3.forward * (range/ 2f)) + 
+             (Vector3.right * (width / 2f))+
+             (Vector3.up * (height/2f)),
             transform.rotation,
             visibleLayersMask);
 
-
-        List<Collider> colliderInLineOfSight = new();
+        targeteables.Clear();
 
         foreach (Collider c in colliders)
         {
-            bool hasLineOfSight = true;
-            if(Physics.Raycast(transform.position, c.transform.position,out RaycastHit hit,range, OcludingLayersMask))
+            ITargeteable targeteable = c.GetComponent<ITargeteable>();
+
+            if (targeteable != null) 
             {
-                hasLineOfSight = hit.collider == c;
+                bool hasLineOfSight = true;
+                if (Physics.Raycast(transform.position, c.transform.position, out RaycastHit hit, range, OcludingLayersMask))
+                {
+                    hasLineOfSight = hit.collider == c;
+                }
+                if (hasLineOfSight) { targeteables.Add(targeteable); }
             }
-
-            if(hasLineOfSight) { colliderInLineOfSight.Add(c); }
         }
-
-
-
         
+    }
+
+    public ITargeteable GetClosestTarget()
+    {
+        return (targeteables.Count > 0) ? targeteables[0] : null;
     }
 }

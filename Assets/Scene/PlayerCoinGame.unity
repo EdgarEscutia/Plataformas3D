@@ -12868,8 +12868,8 @@ MonoBehaviour:
   detectionDistance: 3
   shootingDistance: 10
   chasingState: {fileID: 1328414904}
-  notChasingState: {fileID: 0}
-  shootingState: {fileID: 0}
+  notChasingState: {fileID: 1328414904}
+  shootingState: {fileID: 1328414904}
   target: {fileID: 0}
 --- !u!195 &1328414901
 NavMeshAgent:
@@ -12944,7 +12944,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328414899}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f52fba4071ee8944ba80e01ea233be9, type: 3}
   m_Name: 
@@ -15506,6 +15506,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1617590799}
+  - component: {fileID: 1617590800}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -15528,6 +15529,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1355800821}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617590800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617590798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ede40907ff4ddb4b8fa8461e9aae47a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 15
+  width: 10
+  height: 7
+  visibleLayersMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  OcludingLayersMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
 --- !u!1 &1620402425
 GameObject:
   m_ObjectHideFlags: 0
