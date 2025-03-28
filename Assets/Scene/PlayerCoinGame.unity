@@ -12868,8 +12868,8 @@ MonoBehaviour:
   detectionDistance: 3
   shootingDistance: 10
   chasingState: {fileID: 1328414904}
-  notChasingState: {fileID: 1328414904}
-  shootingState: {fileID: 1328414904}
+  notChasingState: {fileID: 1328414903}
+  shootingState: {fileID: 1328414905}
   target: {fileID: 0}
 --- !u!195 &1328414901
 NavMeshAgent:
