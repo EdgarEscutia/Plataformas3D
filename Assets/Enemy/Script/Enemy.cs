@@ -1,19 +1,29 @@
+using System;
 using System.Collections.Specialized;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : Entity
 {
-    [SerializeField] float wanderingRadius = 5f;
-    [SerializeField] float reachingDistance = 1.5f;
 
-    [SerializeField] float detectionDistance = 3f;
+
+    [SerializeField] float detectionDistance = 15f;
+    [SerializeField] float shootingDistance = 10f;
 
 
     NavMeshAgent agent;
+    WeaponManager weaponManager;
 
-    Vector3 homeOrigin;
-    Vector3 wanderPosition;
+    BaseState[] allStates;
+
+    [Header("States")]
+    [SerializeField] BaseState chasingState;
+    [SerializeField] BaseState notChasingState;
+    [SerializeField] BaseState shootingState;
+
+    Orientator orientator;
+
+    BaseState currentState;
 
     protected override void Awake()
     {
@@ -21,40 +31,78 @@ public class Enemy : Entity
 
         agent = GetComponent<NavMeshAgent>();
 
-        homeOrigin = transform.position;
-        SelectedWanderPosition();
+        allStates = GetComponents<BaseState>();
+        weaponManager = GetComponentInChildren<WeaponManager>();
+
+        foreach (BaseState s in allStates)
+            { s.Init(this);}
+
+
+        orientator = GetComponent<Orientator>();
+
+
+
     }
 
+    private void Start()
+    {
+        ChangeState(notChasingState);
+    }
+
+    public Transform target;
     private void Update()
     {
         Vector3 playerPosition = PlayerController.instance.transform.position;
 
-        if (PlayerController.instance.gameObject.activeSelf &&
-            (Vector3.Distance(playerPosition, transform.position) < detectionDistance))
-        {
-            agent.SetDestination(playerPosition);
-        }
-        else
-        {
-            agent.SetDestination(wanderPosition);
+        //EJECUTAR SENTIDOS
+        target = CheckSenses();
 
-            if (Vector3.Distance(transform.position, wanderPosition) < reachingDistance)
-            {
-                SelectedWanderPosition();
-            }
+        //TOMA DE DECISIONES
+        if (target == null) {
+            ChangeState(notChasingState);
+        }
+        else if(TargetIsInRange())
+        {
+            ChangeState(shootingState);
+        }
+        else {
+            ChangeState(chasingState);
         }
 
         UpdateAnimation();
 
     }
 
-    private void SelectedWanderPosition()
+    void ChangeState(BaseState newState)
     {
-        Vector2 positionXY = Random.insideUnitCircle * wanderingRadius;
-        Vector3 positionXZ = new Vector3(positionXY.x, 0f, positionXY.y);
-        wanderPosition = homeOrigin + positionXZ;
+        if(currentState != newState)
+        {
+            if(currentState != null)
+            {currentState.enabled = false;}
+
+            currentState = newState;
+            if (currentState != null) { currentState.enabled = true; }
+        }
     }
 
+    private Transform CheckSenses()
+    {
+        Vector3 playerPosition = PlayerController.instance.transform.position;
+        return (
+            PlayerController.instance.gameObject.activeSelf &&
+            (Vector3.Distance(playerPosition, transform.position) < detectionDistance)
+            ) ? PlayerController.instance.transform : null;
+       
+    }
+
+    bool TargetIsInRange()
+    {
+        return (target != null) && Vector3.Distance(target.position, transform.position) < shootingDistance;
+       
+    }
+
+
+    #region Enity Implementation
     protected override float GetCurrentVerticalSpeed()
     {
         return 0f;
@@ -79,4 +127,23 @@ public class Enemy : Entity
     {
         return agent.velocity.normalized;
     }
+    #endregion
+
+    #region AI
+    internal NavMeshAgent GetAgent()
+    { return agent; }
+
+    internal Transform GetTarget()
+    {
+        return target;
+    }
+
+    internal WeaponManager GetWeaponManager() { return weaponManager; }
+
+    internal Orientator GetOrientator()
+    {
+        return orientator;
+    }
+
+    #endregion
 }
