@@ -7,6 +7,7 @@ public class StateGoToLastTargetPosition : BaseState
     {
         base.Update();
         enemy.GetAgent().SetDestination(enemy.GetLastTargetPosition());
+        
 
         if(Vector3.Distance(transform.position, enemy.GetLastTargetPosition()) < reachingThreshold)
         {

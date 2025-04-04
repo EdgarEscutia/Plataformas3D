@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Sight : MonoBehaviour
 {
+
+
     [SerializeField] float range = 15f;
     [SerializeField] float width = 10f;
     [SerializeField] float height = 7f;
@@ -12,7 +14,12 @@ public class Sight : MonoBehaviour
     [SerializeField] LayerMask OcludingLayersMask = Physics.DefaultRaycastLayers;
 
     public List<ITargeteable> targeteables = new();
+    [SerializeField] ITargeteable parentTargeteable;
 
+    private void Awake()
+    {
+        parentTargeteable= GetComponentInParent<ITargeteable>();
+    }
 
     private void Update()
     {
@@ -30,17 +37,40 @@ public class Sight : MonoBehaviour
         {
             ITargeteable targeteable = c.GetComponent<ITargeteable>();
 
-            if (targeteable != null) 
+            if (targeteable != null)
             {
-                bool hasLineOfSight = true;
-                if (Physics.Raycast(transform.position, c.transform.position, out RaycastHit hit, range, OcludingLayersMask))
+                if (IsVisibleBecauseFaction(targeteable))
                 {
-                    hasLineOfSight = hit.collider == c;
+                    bool hasLineOfSight = true;
+                    if (Physics.Raycast(transform.position, c.transform.position, out RaycastHit hit, range, OcludingLayersMask))
+                    {
+                        hasLineOfSight = hit.collider == c;
+                    }
+                    if (hasLineOfSight) { targeteables.Add(targeteable); }
                 }
-                if (hasLineOfSight) { targeteables.Add(targeteable); }
             }
         }
         
+    }
+
+    private static bool IsVisibleBecauseFaction(ITargeteable targeteable)
+    {
+        bool isVisibleBecauseFaction = false;
+
+        switch (targeteable.GetFaction())
+        {
+            case ITargeteable.Faction.Player:
+                break;
+
+            case ITargeteable.Faction.Enemy:
+                isVisibleBecauseFaction = targeteable.GetFaction() != ITargeteable.Faction.Enemy;
+                break;
+            case ITargeteable.Faction.Ally:
+                isVisibleBecauseFaction = targeteable.GetFaction() != ITargeteable.Faction.Enemy;
+                break;
+        }
+
+        return isVisibleBecauseFaction;
     }
 
     public ITargeteable GetClosestTarget()

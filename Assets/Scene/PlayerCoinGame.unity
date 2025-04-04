@@ -7761,10 +7761,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 780511993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da97555cdfa3f0f41949b47d4604704f, type: 3}
+  m_Script: {fileID: 11500000, guid: 83ac29d6d3d1e3b418f5cb276f13c3d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachingThreshold: 3
+  state: {fileID: 1328414907}
 --- !u!1 &785006813
 GameObject:
   m_ObjectHideFlags: 0
@@ -13026,6 +13026,7 @@ GameObject:
   - component: {fileID: 1328414903}
   - component: {fileID: 1328414905}
   - component: {fileID: 1328414906}
+  - component: {fileID: 1328414907}
   m_Layer: 0
   m_Name: Enemy_Humanoide
   m_TagString: Untagged
@@ -13046,7 +13047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSmoothingSpeed: 10
-  decissionTreeRoot: {fileID: 0}
+  decissionTreeRoot: {fileID: 802381948}
   detectionDistance: 3
   shootingDistance: 10
   target: {fileID: 0}
@@ -13139,11 +13140,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328414899}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73c6e7ae5070d834d87ec111f03f1903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1328414907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328414899}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da97555cdfa3f0f41949b47d4604704f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reachingThreshold: 1.5
 --- !u!4 &1348695844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -363804881754566181, guid: 2de915305ae421b45afb3eae11de7d63, type: 3}

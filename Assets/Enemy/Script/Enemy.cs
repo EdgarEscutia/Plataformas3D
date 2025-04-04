@@ -4,8 +4,13 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : Entity
+public class Enemy : Entity, ITargeteable
 {
+    [Header("Configuration")]
+    [SerializeField] ITargeteable.Faction faction = ITargeteable.Faction.Enemy;
+
+
+    [Header("AI")]
     [SerializeField] DecisionTreeNode decissionTreeRoot;
 
     [SerializeField] float detectionDistance = 15f;
@@ -40,7 +45,7 @@ public class Enemy : Entity
         weaponManager = GetComponentInChildren<WeaponManager>();
 
         foreach (BaseState s in allStates)
-            { s.Init(this);}
+            {s.Init(this);}
 
 
         orientator = GetComponent<Orientator>();
@@ -184,8 +189,22 @@ public class Enemy : Entity
     {
        hasAlreadyVisitedTheLastTargetPosition = true;
     }
+    #endregion
 
 
+    #region ITARGETEABLE
+
+    public ITargeteable.Faction GetFaction()
+    {
+        return faction;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
 
     #endregion
+
+
 }
