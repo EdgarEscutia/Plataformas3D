@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Specialized;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : Entity
 {
-
+    [SerializeField] DecisionTreeNode decissionTreeRoot;
 
     [SerializeField] float detectionDistance = 15f;
     [SerializeField] float shootingDistance = 10f;
@@ -16,16 +17,19 @@ public class Enemy : Entity
 
     BaseState[] allStates;
 
-    [Header("States")]
-    [SerializeField] BaseState chasingState;
-    [SerializeField] BaseState notChasingState;
-    [SerializeField] BaseState shootingState;
+    //[Header("States")]
+    //[SerializeField] BaseState chasingState;
+    //[SerializeField] BaseState notChasingState;
+    //[SerializeField] BaseState shootingState;
 
     Orientator orientator;
 
     BaseState currentState;
 
     Sight sight;
+
+    DecisionTreeNode[] allDecisionTreeNode;
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,13 +46,19 @@ public class Enemy : Entity
         orientator = GetComponent<Orientator>();
         sight = GetComponentInChildren<Sight>();
 
+        allDecisionTreeNode = GetComponentsInChildren<DecisionTreeNode>();
+        foreach (DecisionTreeNode node in allDecisionTreeNode)
+            { node.SetEnemy(this);}
+           
+        
 
 
     }
 
     private void Start()
     {
-        ChangeState(notChasingState);
+        decissionTreeRoot.Execute();
+        //ChangeState(notChasingState);
     }
 
     public Transform target;
@@ -60,45 +70,36 @@ public class Enemy : Entity
         target = CheckSenses();
 
         //TOMA DE DECISIONES
-        if (target == null) {
-            ChangeState(notChasingState);
-        }
-        else if(TargetIsInRange())
-        {
-            ChangeState(shootingState);
-        }
-        else {
-            ChangeState(chasingState);
-        }
-
+        //if (target == null) {
+        //    ChangeState(notChasingState);
+        //}
+        //else if(TargetIsInRange())
+        //{
+        //    ChangeState(shootingState);
+        //}
+        //else {
+        //    ChangeState(chasingState);
+        //}
+        decissionTreeRoot.Execute();
         UpdateAnimation();
 
     }
 
-    void ChangeState(BaseState newState)
-    {
-        if(currentState != newState)
-        {
-            if(currentState != null)
-            {currentState.enabled = false;}
-
-            currentState = newState;
-            if (currentState != null) { currentState.enabled = true; }
-        }
-    }
+    
 
     private Transform CheckSenses()
     {
         ITargeteable targeteable = sight.GetClosestTarget();
+        if (targeteable != null)
+        {
+            hasAlreadyVisitedTheLastTargetPosition = false;
+            lastTargetPosition = targeteable.GetTransform().position;
+        }
 
         return (targeteable != null) ? targeteable.GetTransform() : null;
     }
 
-    bool TargetIsInRange()
-    {
-        return (target != null) && Vector3.Distance(target.position, transform.position) < shootingDistance;
-       
-    }
+   
 
 
     #region Enity Implementation
@@ -143,6 +144,48 @@ public class Enemy : Entity
     {
         return orientator;
     }
+
+    internal void ChangeStateTo(BaseState newState)
+    {
+        
+        if (currentState != newState)
+        {
+            if (currentState != null)
+            { currentState.enabled = false; }
+
+            currentState = newState;
+            if (currentState != null) { currentState.enabled = true; }
+        }
+        
+    }
+
+    internal bool HasTarget()
+    {
+        return (target != null);
+    }
+
+    public bool TargetIsInRange()
+    {
+        return (target != null) && 
+            (Vector3.Distance(target.position, transform.position) < shootingDistance);
+
+    }
+
+    Vector3 lastTargetPosition;
+    bool hasAlreadyVisitedTheLastTargetPosition = true;
+    internal bool HasAlreadyVisitedTheLastTargetPosition()
+    {
+        return hasAlreadyVisitedTheLastTargetPosition;
+    }
+
+    public Vector3 GetLastTargetPosition() { return lastTargetPosition; }
+
+    internal void NotifyLastTargetPositionReached()
+    {
+       hasAlreadyVisitedTheLastTargetPosition = true;
+    }
+
+
 
     #endregion
 }

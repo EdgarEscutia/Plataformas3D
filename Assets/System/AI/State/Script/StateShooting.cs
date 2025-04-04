@@ -8,13 +8,16 @@ public class StateShooting : BaseState
     {
         base.Init(enemy);
         angularSpeed = enemy.GetAgent().angularSpeed;
+        enemy.GetAgent().SetDestination(transform.position);
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        enemy.GetWeaponManager().StartContinuosShooting();
-        enemy.GetAgent().destination = transform.position;
+        enemy.  
+            GetWeaponManager().
+            StartContinuosShooting();
+        //enemy.GetAgent().destination = transform.position;
     }
 
     protected override void Update()
