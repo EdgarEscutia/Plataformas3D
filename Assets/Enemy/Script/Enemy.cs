@@ -94,7 +94,9 @@ public class Enemy : Entity, ITargeteable
 
     private Transform CheckSenses()
     {
+        //Debug.Log(sight);
         ITargeteable targeteable = sight.GetClosestTarget();
+        //Debug.Log(targeteable);
         if (targeteable != null)
         {
             hasAlreadyVisitedTheLastTargetPosition = false;
@@ -140,6 +142,7 @@ public class Enemy : Entity, ITargeteable
 
     internal Transform GetTarget()
     {
+        //Debug.Log(target);
         return target;
     }
 

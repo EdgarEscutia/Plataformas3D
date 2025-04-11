@@ -6,9 +6,13 @@ public class StateChasing : BaseState
     {
         
         base.Update();
+        //Debug.Log(enemy);
         Transform target = enemy.GetTarget();
-        Debug.Log(target);
-        enemy.GetAgent().SetDestination(target.position);
+        if (target != null)
+        {
+            enemy.GetAgent().SetDestination(target.position);
+        }
+        //Debug.Log(enemy);
         
     }
 }

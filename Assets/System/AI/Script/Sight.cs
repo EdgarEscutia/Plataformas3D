@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Sight : MonoBehaviour
 {
-
-
     [SerializeField] float range = 15f;
     [SerializeField] float width = 10f;
     [SerializeField] float height = 7f;
@@ -46,7 +44,7 @@ public class Sight : MonoBehaviour
                     {
                         hasLineOfSight = hit.collider == c;
                     }
-                    if (hasLineOfSight) { targeteables.Add(targeteable); }
+                    if (hasLineOfSight) {targeteables.Add(targeteable); }
                 }
             }
         }
@@ -69,12 +67,12 @@ public class Sight : MonoBehaviour
                 isVisibleBecauseFaction = targeteable.GetFaction() != ITargeteable.Faction.Enemy;
                 break;
         }
-
         return isVisibleBecauseFaction;
     }
 
     public ITargeteable GetClosestTarget()
     {
+        //Debug.Log((targeteables.Count > 0) ? targeteables[0] : null);
         return (targeteables.Count > 0) ? targeteables[0] : null;
     }
 }
