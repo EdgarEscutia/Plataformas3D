@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] public int initialWeaponToSelect;
+
+    [SerializeField] public UnityEvent<Weapon> onWeaponChange;
+
 
     [Header("Debug")]
     [SerializeField] public bool debugSelectNextWeapon;
@@ -93,6 +97,7 @@ public class WeaponManager : MonoBehaviour
             weapons[currentWeaponIndex].NotifySelected();
 
         }
+        onWeaponChange.Invoke(currentWeaponIndex != -1 ? weapons[currentWeaponIndex] : null);
     }
 
     public bool HasSelectedWeapon()
