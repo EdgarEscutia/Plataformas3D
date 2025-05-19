@@ -9,10 +9,7 @@ public class MainMenu : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0f;
-
-        }
+        { Time.timeScale = 0f; }             
     }
     public void Salir()
     {
