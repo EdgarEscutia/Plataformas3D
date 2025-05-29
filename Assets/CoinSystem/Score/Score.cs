@@ -9,6 +9,9 @@ public class Score_Canvas : MonoBehaviour
     [SerializeField] Canvas victoryCanvas;
 
     [SerializeField] GameObject Puerta1;
+    [SerializeField] GameObject Puerta2;
+    [SerializeField] GameObject Puerta3;
+    [SerializeField] GameObject Puerta4;
 
 
     [SerializeField] int puerta1;
@@ -33,7 +36,19 @@ public class Score_Canvas : MonoBehaviour
         {
             Puerta1.SetActive(false);
         }
-        if(Coin.count == 0)
+        if (Coin.count == puerta2)
+        {
+            Puerta2.SetActive(false);
+        }
+        if (Coin.count == puerta3)
+        {
+            Puerta3.SetActive(false);
+        }
+        if (Coin.count == puerta4)
+        {
+            Puerta4.SetActive(false);
+        }
+        if (Coin.count == 0)
         {
             victoryCanvas.gameObject.SetActive(true);
         }
