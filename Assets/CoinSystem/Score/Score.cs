@@ -8,11 +8,20 @@ public class Score_Canvas : MonoBehaviour
     public TMP_Text score;
     [SerializeField] Canvas victoryCanvas;
 
+    [SerializeField] GameObject Puerta1;
+
+
+    [SerializeField] int puerta1;
+    [SerializeField] int puerta2;
+    [SerializeField] int puerta3;
+    [SerializeField] int puerta4;
+
     // Start is called before the first frame update
     void Start()
     {
         score = GetComponent<TMP_Text>();
         victoryCanvas.gameObject.SetActive(false);
+        Puerta1.SetActive(true);
     }
 
     // Update is called once per frame
@@ -20,6 +29,10 @@ public class Score_Canvas : MonoBehaviour
     {
         score.text = $"{Coin.count} / {Coin.maxCount}";
         
+        if(Coin.count == puerta1)
+        {
+            Puerta1.SetActive(false);
+        }
         if(Coin.count == 0)
         {
             victoryCanvas.gameObject.SetActive(true);
