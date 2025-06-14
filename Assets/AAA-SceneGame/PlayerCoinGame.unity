@@ -31297,9 +31297,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605768845}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -59.559998, y: -2.91, z: -197.61}
-  m_LocalScale: {x: 2.6617, y: 2.6617, z: 2.6617}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.7391915, y: 0.33925432, z: -15.77797}
+  m_LocalScale: {x: 0.97096264, y: 0.97096264, z: 0.97096264}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222960177}
@@ -31317,7 +31317,7 @@ Transform:
   - {fileID: 1481780780}
   - {fileID: 1442150592}
   - {fileID: 2113913981}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1824565605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1608696372
 GameObject:
@@ -32840,8 +32840,8 @@ MonoBehaviour:
   Puerta4: {fileID: 1290417683}
   Puerta5: {fileID: 1633465972}
   Puerta6: {fileID: 871005115}
-  puerta1: 14
-  puerta2: 12
+  puerta1: 15
+  puerta2: 13
   puerta3: 12
   puerta4: 8
   puerta5: 1
@@ -36162,6 +36162,7 @@ Transform:
   m_Children:
   - {fileID: 441500331}
   - {fileID: 1037017371}
+  - {fileID: 1605768846}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1825360946
@@ -41950,9 +41951,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3259684923231657583, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3603389177768886911, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603389177768886911, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4246790894612114672, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_IsActive
@@ -41961,6 +41970,10 @@ PrefabInstance:
     - target: {fileID: 4606563300279332530, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4666797838928551434, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5244635568560949332, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_IsActive
@@ -41986,6 +41999,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Extinguisher
       objectReference: {fileID: 0}
+    - target: {fileID: 6204615079223622745, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6336874711246724024, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_Name
       value: Weapons
@@ -41993,6 +42010,10 @@ PrefabInstance:
     - target: {fileID: 7099223585165608980, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151869629749711580, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8836448800657700456, guid: 31875aeecb322b2448229d3e3beba06e, type: 3}
       propertyPath: m_IsActive
@@ -42611,4 +42632,3 @@ SceneRoots:
   - {fileID: 1171796869}
   - {fileID: 833920377}
   - {fileID: 1824565605}
-  - {fileID: 1605768846}
